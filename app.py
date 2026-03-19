@@ -9,6 +9,7 @@ from better_face_rec import build_or_update_records, build_index_from_records, l
 import csv
 import io
 from flask import make_response
+from dotenv import load_dotenv
 
 IMAGES_DIR = "images"
 attendance_status = {}
@@ -22,10 +23,11 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///attendance.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db.init_app(app)
 
-app.secret_key = "faceattend123"
+load_dotenv()
 
+app.secret_key = os.environ.get("SECRET_KEY")
 users = {
-    "admin": os.environ.get("ADMIN_PASSWORD", "Face@2026")
+    "admin": os.environ.get("ADMIN_PASSWORD")
 }
 
 @app.route("/",methods = ['GET','POST'])
