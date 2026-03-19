@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+
+
+{% block body %}
+
+
+<div class="dashboard-container">
+    <!-- Stat Cards -->
+    <div class="stat-grid">
+        <div class="stat-card blue">
+            <div class="stat-top">
+                <div class="stat-icon blue">👥</div>
+                <span class="stat-trend">Today</span>
+            </div>
+            <div class="stat-num">{{ present_today }}</div>
+            <div class="stat-label">Present Today</div>
+        </div>
+
+        <div class="stat-card green">
+            <div class="stat-top">
+                <div class="stat-icon green">🎯</div>
+                <span class="stat-trend">Total</span>
+            </div>
+            <div class="stat-num">{{ registered_faces }}</div>
+            <div class="stat-label">Registered Faces</div>
+        </div>
+
+        <div class="stat-card purple">
+            <div class="stat-top">
+                <div class="stat-icon purple">📅</div>
+                <span class="stat-trend">2026</span>
+            </div>
+            <div class="stat-num">{{ today }}</div>
+            <div class="stat-label">Today's Date</div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="actions-grid">
+        <div class="action-card">
+            <div class="action-icon">📷</div>
+            <h3 class="action-title">Start Attendance</h3>
+            <p class="action-desc">Start webcam and mark attendance automatically</p>
+            <a href="/live" class="btn-action-primary">Start Now →</a>
+        </div>
+
+        <div class="action-card">
+            <div class="action-icon">👤</div>
+            <h3 class="action-title">Register Face</h3>
+            <p class="action-desc">Add a new person to the system</p>
+            <a href="/register" class="btn-action-secondary">Register →</a>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock body %}

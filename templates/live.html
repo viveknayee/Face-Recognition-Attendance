@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Live Attendance{% endblock %}
+
+{% block body %}
+<div class="dashboard-container">
+    <div class="register-card">
+        <h2 class="register-title">Live Attendance</h2>
+        <p class="register-sub">Face recognition attendance system</p>
+        <div id="msg" style="text-align:center;margin-top:10px;min-height:30px;"></div>
+        <div class="webcam-container">
+            <img src="{{ url_for('video_feed') }}" 
+                 width="640" height="480"
+                 class="webcam-feed">
+        </div>
+
+        <div class="webcam-controls">
+            
+            <a href="/attendance" class="btn-action-secondary">← View Records</a>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+setInterval(function(){
+    fetch('/attendance_status')
+    .then(r => r.json())
+    .then(data => {
+        var msg = document.getElementById('msg');
+        var keys = Object.keys(data);
+        if(keys.length > 0){
+            var name = keys[0];
+            if(data[name] == 'marked'){
+                msg.innerHTML = '<p style="color:#4ade80">✅ ' + name + ' attendance marked!</p>';
+            } else {
+                msg.innerHTML = '<p style="color:#f59e0b">⚠️ ' + name + ' already marked today!</p>';
+            }
+        }
+    });
+}, 2000);
+</script>                               
+{% endblock body %}

@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Login{% endblock %}
+
+{% block body %}
+<div class="login-container">
+    <div class="login-card">
+        
+        <div class="login-logo">👁</div>
+        <h2 class="login-title">FaceAttend</h2>
+        <p class="login-sub">Secure Admin Access</p>
+
+        {% if error %}
+        <div class="alert-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/">
+            <div class="input-wrap">
+                <label>Username</label>
+                <input type="text" name="username" placeholder="Enter username" required>
+            </div>
+            <div class="input-wrap">
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter password" required>
+            </div>
+            <button type="submit" class="btn-login">Login →</button>
+        </form>
+
+    </div>
+</div>
+{% endblock body %}
+

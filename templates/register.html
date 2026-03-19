@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Register Face{% endblock %}
+
+{% block body %}
+<div class="dashboard-container">
+    <div class="register-card">
+        
+        <h2 class="register-title">Register New Face</h2>
+        <p class="register-sub">Add a new person to the attendance system</p>
+
+        {% if message %}
+        <div class="alert-success">{{ message }}</div>
+        {% endif %}
+
+        {% if error %}
+        <div class="alert-error">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" action="/register" enctype="multipart/form-data">
+            <div class="input-wrap">
+                <label>Full Name</label>
+                <input type="text" name="name" placeholder="Enter person name" required>
+            </div>
+            <div class="input-wrap">
+                <label>Upload Photo</label>
+                <input type="file" name="photo" accept="image/*" multiple required>
+            </div>
+            <button type="submit" class="btn-login">Register →</button>
+        </form>
+
+    </div>
+</div>
+{% endblock body %}

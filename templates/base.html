@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - FaceAttend</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<canvas id="particles" style="position:fixed;top:0;left:0;z-index:0;pointer-events:none;"></canvas>
+{% if session.user %}         
+<nav class="navbar">
+    <div class="nav-left">
+        <div class="nav-logo">👁</div>
+        <div>
+            <div class="nav-title">FaceAttend</div>
+            <div class="nav-subtitle">Attendance System</div>
+        </div>
+    </div>
+
+    <div class="nav-links">
+        <a href="/dashboard" class="nav-link">Home</a>
+        <a href="/register" class="nav-link">Register</a>
+        <a href="/live" class="nav-link">Live</a>
+        <a href="/attendance" class="nav-link">Records</a>
+    </div>
+
+    <div class="nav-right">
+        <a href="/logout" class="nav-logout">Logout</a>
+    </div>
+</nav>
+{% endif %}
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+{% if messages %}
+{% for category, message in messages %}
+<div id="toast">✅ {{ message }}</div>
+{% endfor %}
+{% endif %}
+{% endwith %}
+
+    {% block body %}
+    {% endblock body %}
+
+<script>
+var t = document.getElementById('toast');
+if(t){ setTimeout(function(){ t.remove(); }, 4000); }
+</script>
+
+
+<script>
+// Page fade in
+document.body.style.opacity = '0';
+document.body.style.transition = 'opacity 0.4s ease';
+window.addEventListener('load', function(){
+    document.body.style.opacity = '1';
+});
+
+// Stat card count up animation
+document.querySelectorAll('.stat-num').forEach(function(el){
+    var target = parseInt(el.innerText);
+    if(!isNaN(target) && target > 0){
+        var count = 0;
+        var step = Math.ceil(target / 20);
+        var timer = setInterval(function(){
+            count += step;
+            if(count >= target){
+                count = target;
+                clearInterval(timer);
+            }
+            el.innerText = count;
+        }, 50);
+    }
+});
+</script>
+
+<script>
+var canvas = document.getElementById('particles');
+var ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+var particles = [];
+for(var i = 0; i < 80; i++){
+    particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 2 + 0.5,
+        dx: (Math.random() - 0.5) * 0.5,
+        dy: (Math.random() - 0.5) * 0.5,
+        opacity: Math.random() * 0.5 + 0.1
+    });
+}
+
+function animate(){
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(function(p){
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        var colors = ['99,102,241', '6,182,212', '139,92,246'];
+        var c = colors[Math.floor(Math.random() * colors.length)];
+        ctx.fillStyle = 'rgba(' + c + ',' + p.opacity + ')';
+        ctx.fill();
+        p.x += p.dx;
+        p.y += p.dy;
+        if(p.x < 0 || p.x > canvas.width) p.dx *= -1;
+        if(p.y < 0 || p.y > canvas.height) p.dy *= -1;
+    });
+    requestAnimationFrame(animate);
+}
+animate();
+</script>
+</body>
+</html>
