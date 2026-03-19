@@ -21,3 +21,7 @@ Thumbs.db
 
 test.jpg
 images/
+
+# Pickle files
+*.pkl
+*.pickle

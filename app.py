@@ -25,9 +25,7 @@ db.init_app(app)
 app.secret_key = "faceattend123"
 
 users = {
-    "admin" : "admin123",
-    "vivek": "vivek456",
-    "teacher": "teacher789"
+    "admin": os.environ.get("ADMIN_PASSWORD", "Face@2026")
 }
 
 @app.route("/",methods = ['GET','POST'])
